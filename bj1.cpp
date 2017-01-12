@@ -124,3 +124,82 @@ int PlayerBet(int &cont)
 
 	return bet;
 }
+
+void PlayerCont(int &cont)
+{
+	system("cls");
+	titlu();
+
+	while (cont < 50 || cont > 1000)
+	{
+		cout << "Introduceti suma de bani cu care intrati in joc (minim 50 si maxim 1000) : ";
+		cin >> cont;
+
+		if (cont >= 50 && cont <= 1000) break;
+
+		system("cls");
+		titlu();
+		cout << "!!!! Ati ales gresit valoarea (numai intre 50 si 1000) !!!! \n";
+	}
+}
+
+
+
+int ModJoc()
+{
+	int mod = 0;
+	system("cls");
+	titlu();
+	while (mod < 1 || mod > 2)
+	{
+		cout << "Alegeti modul in care doriti sa jucati !!! \n";
+		cout << "1.Dealer vs. Player \n";
+		cout << "2.Dealer vs. Player vs. Cpu Player \n";
+		cin >> mod;
+
+		if (mod == 1 || mod == 2)
+		{
+			if (mod == 1)
+			{
+				cout << "Ati ales sa jucati : Dealer vs. Player  !\n\n";
+			}
+			if (mod == 2)
+			{
+				cout << "Ati ales sa jucati : Dealer vs. Player vs. Cpu Player  !\n\n";
+			}
+		}
+		else
+		{
+			system("cls");
+			titlu();
+			cout << "Ati introdus o valoare eronata ! Va rugam sa alegeti din nou ! \n";
+		}
+	}
+
+	return mod;
+}
+
+
+
+int gen_bet(int BaniCpuPlayer)
+{
+	if (BaniCpuPlayer > 250)
+	{
+		srand(time(0));
+		return rand() % 250 + 1;
+	}
+	else
+	{
+		srand(time(0));
+		return rand() % BaniCpuPlayer + 1;
+	}
+}
+
+
+
+int gen_bani()
+{
+	srand(time(0));
+	return rand() % 1000 + 50;
+}
+
