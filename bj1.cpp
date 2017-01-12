@@ -262,5 +262,306 @@ int VerifGen(int uz[max])
 	return nr;
 }
 
+void FirstGen(int aleg,int dealer[max],int player[max],int cpu_player[max],int uz[max],int &fgen)
+{
+	int nrgen;
+
+	Regen:
+
+	nrgen = VerifGen(uz);
+
+	if (aleg == 1)
+	{
+
+		if (fgen >= 0 && fgen < 4)
+		{
+			if (fgen == 0) dealer[0] = nrgen;
+			if (fgen == 1) player[0] = nrgen;
+			if (fgen == 2) dealer[1] = nrgen;
+			if (fgen == 3) player[1] = nrgen;
+			fgen++;
+			goto Regen;
+		}
+	}
+
+	if (aleg == 2)
+	{
+
+		if (fgen >= 0 && fgen < 6)
+		{
+			if (fgen == 0) dealer[0] = nrgen;
+			if (fgen == 1) player[0] = nrgen;
+			if (fgen == 2) dealer[1] = nrgen;
+			if (fgen == 3) player[1] = nrgen;
+			if (fgen == 4) cpu_player[0] = nrgen;
+			if (fgen == 5) cpu_player[1] = nrgen;
+			fgen++;
+			goto Regen;
+		}
+	}
+}
+
+
+int GenCpuPlayer(int uz[max],int cpu_play[max])
+{
+	int val = 0, scor = 0;
+
+	while (scor < 17)
+	{
+		scor = 0;
+		gen_dealer(uz, cpu_play);
+		for (int i = 0; i < max; i++)
+		{
+			if (cpu_play[i] != 0)
+			{
+				val = cpu_play[i] / 10;
+				if (val == 1) scor += 11;
+				else if (val == 11) scor += 10;
+				else if (val == 12) scor += 10;
+				else if (val == 13) scor += 10;
+				else scor += val;
+			}
+		}
+	}
+	return scor;
+
+}
+
+int main()
+{
+	int uz_carti[max], dealer[max], player[max], cpu_player[max];  // Vectorii in care vom memora toate cartile generate si cartile fiecarui player + dealerul ..
+	int playerbet, cpu_playerbet, insurancebet;	// variabilele care memoreaza pariurile (vor fi suprascrise) ..
+	int bani = 0, cpu_playerbani = 0;	// suma de bani  cu care playerul real intra in joc (50 - 1000) ..
+	int alegere1, alegere2;			// alegere1 = tipul de joc , alegere2 = obtiunea din meniu ..
+	int tip, val, nrgen;			// tipul si valorea cartilor generate ..
+	int i, j;						// pt foruri (contori) ..
+	char nume_player[10];			// sir caractere pt numele playerului real ..
+	int fgen = 0;					// primele 4 sau 6 generari (primele carti de pe masa pana la meniul jocului) - contor ..
+	bool splitok = false, jocnou = true, rularenoua = true, insuranceok = false, showHiden = false;
+	int scorplayer = 0, scordealer = 0, scorcpuplayer = 0, scorascuns = 0;	//  variabile care memoreaza scorurile fiecarui player + dealer , vor fi suprascrise la un nou joc / runda ..
+	//int aux1 = 0, aux2 = 0, aux3 = 0, aux4 = 0;
+	int splitscorplayer = 0, splitplayerbet = 0;
+	// ++++++++++  Nume & Suma de bani  ++++++++++
+	titlu();
+
+	cout << "Introduceti numele cu care doriti sa intrati in joc : ";
+	cin >> nume_player;
+
+	bani_alegere:
+	PlayerCont(bani);
+
+	cout <<"\n\n";
+
+
+
+
+	_jocnou:
+	if (jocnou == true)
+	{
+
+		for (i = 0; i < max; i++)
+		{
+			uz_carti[i] = 0;
+			dealer[i] = 0;
+			player[i] = 0;
+			cpu_player[i] = 0;
+		}
+		fgen = 0;
+		scorcpuplayer = 0;
+		scorplayer = 0;
+		splitscorplayer = 0;
+		scordealer = 0;
+		scorascuns = 0;
+		splitok = false;
+		jocnou = true;
+		//rularenoua = true;
+		insuranceok = false;
+		showHiden = false;
+		playerbet = 0;
+		cpu_playerbet = 0;
+		insurancebet = 0;
+		splitplayerbet = 0;
+		system("cls");
+	}
+
+
+	titlu();
+	if (rularenoua == true)
+	{
+		alegere1 = ModJoc();
+		rularenoua = false;
+	}
+
+
+	rebet:
+
+	playerbet = PlayerBet(bani);
+
+
+	if (alegere1 == 2)
+	{
+		cpu_playerbani = gen_bani();
+		cpu_playerbet = gen_bet(cpu_playerbani);
+		cpu_playerbani -= cpu_playerbet;
+	}
+
+	system("cls");
+	titlu();
+
+	regenerare:
+	cout << "Loading ...";
+
+	nrgen = VerifGen(uz_carti);
+
+
+	FirstGen(alegere1, dealer, player, cpu_player, uz_carti, fgen);
+
+
+	_alegere2:
+	system("cls");
+	titlu();
+
+
+
+
+	cout << " Dealer   : ";
+	if (showHiden == false)
+	{
+
+		for (i = 0; i < max; i++)
+		{
+			if (dealer[i] != 0 && i == 0)
+			{
+				cout << "??  ";
+				if (dealer[i] / 10 == 1) scorascuns += 11;
+				else if (dealer[i] / 10 == 11) scorascuns += 10;
+				else if (dealer[i] / 10 == 12) scorascuns += 10;
+				else if (dealer[i] / 10 == 13) scorascuns += 10;
+				else scorascuns += dealer[i] / 10;
+			}
+			else if (dealer[i] != 0 && i > 0)
+			{
+				val = dealer[i] / 10;
+				if (val == 1)
+				{
+					cout << "A";
+					scordealer += 11;
+					scorascuns += 11;
+				}
+				else if (val == 11)
+				{
+					cout << "J";
+					scordealer += 10;
+					scorascuns += 10;
+				}
+				else if (val == 12)
+				{
+					cout << "Q";
+					scordealer += 10;
+					scorascuns += 10;
+				}
+				else if (val == 13)
+				{
+					cout << "K";
+					scordealer += 10;
+					scorascuns += 10;
+				}
+				else
+				{
+					cout << val;
+					scordealer += val;
+					scorascuns += val;
+				}
+
+				tip = dealer[i] % 10;
+				if (tip == 1) cout << (char)03;
+				else if (tip == 2) cout << (char)04;
+				else if (tip == 3) cout << (char)05;
+				else if (tip == 4) cout << (char)06;
+				cout << " ";
+			}
+		}
+	}
+	else if (showHiden == true)
+	{
+		for (i = 0; i < max; i++)
+		{
+			if (dealer[i] != 0)
+			{
+
+				val = dealer[i] / 10;
+				if (val == 1)
+				{
+					cout << "A";
+					scordealer += 11;
+					scorascuns += 11;
+				}
+				else if (val == 11)
+				{
+					cout << "J";
+					scordealer += 10;
+					scorascuns += 10;
+				}
+				else if (val == 12)
+				{
+					cout << "Q";
+					scordealer += 10;
+					scorascuns += 10;
+				}
+				else if (val == 13)
+				{
+					cout << "K";
+					scordealer += 10;
+					scorascuns += 10;
+				}
+				else
+				{
+					cout << val;
+					scordealer += val;
+					scorascuns += val;
+				}
+
+				tip = dealer[i] % 10;
+				if (tip == 1) cout << (char)03;
+				else if (tip == 2) cout << (char)04;
+				else if (tip == 3) cout << (char)05;
+				else if (tip == 4) cout << (char)06;
+				cout << " ";
+			}
+		}
+	}
+
+	if (scorascuns > 21)
+	{
+		for (i = 0; i < max; i++)
+		{
+			if (dealer[i] == 0) break;
+			if (dealer[i] == 11)
+			{
+				scorascuns -= 10;
+				if (showHiden == true) scordealer -= 10;
+			}
+			else if (dealer[i] == 12)
+			{
+				scorascuns -= 10;
+				if (showHiden == true) scordealer -= 10;
+			}
+			else if (dealer[i] == 13)
+			{
+				scorascuns -= 10;
+				if (showHiden == true) scordealer -= 10;
+			}
+			else if (dealer[i] == 14)
+			{
+				scorascuns -= 10;
+				if (showHiden == true) scordealer -= 10;
+			}
+		}
+
+	}
+	cout << "\n Scor Dealer este : " << scordealer;
+	cout << "\n\n";
+
+
 
 
