@@ -74,3 +74,53 @@ void Refill(int &cont)
 		cout << "!!!! Ati ales gresit valoarea (numai intre 50 si 1000) !!!! \n";
 	}
 }
+
+int PlayerBet(int &cont)
+{
+	int bet = 0;;
+
+	while (cont == 0)
+	{
+		system("cls");
+		titlu();
+		cout << "Ati ramas fara BANI :)) !!! \n";
+		cout << "Apasati ENTER pt a umple contul !!! \n";
+		cin.get();
+		//cin.get();
+		Refill(cont);
+	}
+
+	if (cont < 250)
+	{
+		while (bet < 1 || bet > cont)
+		{
+			cout << "Introduceti pariul (intre 1 si " << cont << ") : ";
+			cin >> bet;
+
+			if (bet >= 1 && bet <= cont) break;
+
+			system("cls");
+			titlu();
+
+			cout << "!!! Ati ales gresit valoarea !!! \n";
+		}
+	}
+	else if (cont >= 250)
+	{
+		while (bet < 1 || bet > 250)
+		{
+			cout << "Introduceti pariul (intre 1 si 250) : ";
+			cin >> bet;
+
+			if (bet >= 1 && bet <= 250) break;
+
+			system("cls");
+			titlu();
+
+			cout << "!!! Ati ales gresit valoarea !!! \n";
+		}
+	}
+	cont -= bet;
+
+	return bet;
+}
