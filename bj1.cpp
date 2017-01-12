@@ -203,3 +203,64 @@ int gen_bani()
 	return rand() % 1000 + 50;
 }
 
+int gen_random()  // Functia care genereaza cartile ..
+{
+	int x, y;
+	srand(time(0));
+	x = rand() % 4 + 1;
+	srand(time(0));
+	y = rand() % 13 + 1;
+	return y * 10 + x;
+
+}
+
+
+
+void gen_dealer(int a[max], int b[max])
+{
+	int z, i;
+
+	AgainHere:
+	srand(time(0));
+	z = gen_random();
+	for (i = 0; i < max; i++)
+	{
+		if (a[i] == z && a[i] != 0) goto AgainHere;
+		if (a[i] == 0)
+		{
+			a[i] = z;
+			break;
+		}
+	}
+
+	for (i = 0; i < max; i++)
+	if (b[i] == 0)
+	{
+		b[i] = z;
+		break;
+	}
+}
+
+
+int VerifGen(int uz[max])
+{
+	int i, nr;
+
+	Again:
+	nr = gen_random();
+
+	for (i = 0; i < max; i++)
+	{
+		if (uz[i] == nr) goto Again;
+
+		if (uz[i] == 0)
+		{
+			uz[i] = nr;
+			break;
+		}
+	}
+	return nr;
+}
+
+
+
