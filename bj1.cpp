@@ -75,6 +75,7 @@ void Refill(int &cont)
 	}
 }
 
+
 int PlayerBet(int &cont)
 {
 	int bet = 0;;
@@ -124,6 +125,9 @@ int PlayerBet(int &cont)
 
 	return bet;
 }
+
+
+
 
 void PlayerCont(int &cont)
 {
@@ -203,6 +207,7 @@ int gen_bani()
 	return rand() % 1000 + 50;
 }
 
+
 int gen_random()  // Functia care genereaza cartile ..
 {
 	int x, y;
@@ -261,6 +266,8 @@ int VerifGen(int uz[max])
 	}
 	return nr;
 }
+
+
 
 void FirstGen(int aleg,int dealer[max],int player[max],int cpu_player[max],int uz[max],int &fgen)
 {
@@ -563,5 +570,641 @@ int main()
 	cout << "\n\n";
 
 
+// CPU Player  ...
+
+	if (alegere1 == 2)
+	{
+
+		cout << " Computer  : ";
+		for (i = 0; i < max; i++)
+		{
+			if (cpu_player[i] != 0)
+			{
+				val = cpu_player[i] / 10;
+				if (val == 1)
+				{
+					cout << "A";
+					scorcpuplayer += 11;
+				}
+				else if (val == 11)
+				{
+					cout << "J";
+					scorcpuplayer += 10;
+				}
+				else if (val == 12)
+				{
+					cout << "Q";
+					scorcpuplayer += 10;
+				}
+				else if (val == 13)
+				{
+					cout << "K";
+					scorcpuplayer += 10;
+				}
+				else
+				{
+					cout << val;
+					scorcpuplayer += val;
+				}
+
+				tip = cpu_player[i] % 10;
+				if (tip == 1) cout << (char)03;
+				else if (tip == 2) cout << (char)04;
+				else if (tip == 3) cout << (char)05;
+				else if (tip == 4) cout << (char)06;
+				cout << " ";
+			}
+		}
+
+		if (scorcpuplayer > 21)
+		{
+			for (i = 0; i < max; i++)
+			{
+				if (cpu_player[i] == 0) break;
+				if (cpu_player[i] == 11) scorcpuplayer -= 10;
+				else if (cpu_player[i] == 12) scorcpuplayer -= 10;
+				else if (cpu_player[i] == 13) scorcpuplayer -= 10;
+				else if (cpu_player[i] == 14) scorcpuplayer -= 10;
+			}
+
+		}
+
+		cout << "\n Scor  Computer : " << scorcpuplayer;
+		cout << "\n Cont  Computer : " << cpu_playerbani;
+		cout << "\n Pariu  Computer : " << cpu_playerbet;
+		cout << "\n\n";
+	}
 
 
+
+	if (splitok == false)
+	{
+
+		cout << " " << nume_player << " : ";
+		for (i = 0; i < max; i++)
+		{
+			if (player[i] != 0)
+			{
+				val = player[i] / 10;
+				if (val == 1)
+				{
+					cout << "A";
+					scorplayer += 11;
+				}
+				else if (val == 11)
+				{
+					cout << "J";
+					scorplayer += 10;
+				}
+				else if (val == 12)
+				{
+					cout << "Q";
+					scorplayer += 10;
+				}
+				else if (val == 13)
+				{
+					cout << "K";
+					scorplayer += 10;
+				}
+				else
+				{
+					cout << val;
+					scorplayer += val;
+				}
+
+				tip = player[i] % 10;
+				if (tip == 1) cout << (char)03;
+				else if (tip == 2) cout << (char)04;
+				else if (tip == 3) cout << (char)05;
+				else if (tip == 4) cout << (char)06;
+				cout << " ";
+			}
+		}
+
+		if (scorplayer > 21)
+		{
+			for (i = 0; i < max; i++)
+			{
+				if (player[i] == 0) break;
+				if (player[i] == 11) scorplayer -= 10;
+				else if (player[i] == 12) scorplayer -= 10;
+				else if (player[i] == 13) scorplayer -= 10;
+				else if (player[i] == 14) scorplayer -= 10;
+			}
+		}
+
+		cout << "\n Scor   " << nume_player << " : " << scorplayer;
+		cout << "\n Cont   " << nume_player << " : " << bani;
+		cout << "\n Pariu  " << nume_player << " : " << playerbet;
+		if (insuranceok == true) cout << "\n iPariu " << nume_player << " : " << insurancebet;
+		cout << "\n\n";
+	}
+	else if (splitok == true)
+	{
+		cout << " " << nume_player << " : ";
+		for (i = 0; i < max; i++)
+		{
+			if (player[i] != 0 && i % 2 == 0)
+			{
+				val = player[i] / 10;
+				if (val == 1)
+				{
+					cout << "A";
+					scorplayer += 11;
+				}
+				else if (val == 11)
+				{
+					cout << "J";
+					scorplayer += 10;
+				}
+				else if (val == 12)
+				{
+					cout << "Q";
+					scorplayer += 10;
+				}
+				else if (val == 13)
+				{
+					cout << "K";
+					scorplayer += 10;
+				}
+				else
+				{
+					cout << val;
+					scorplayer += val;
+				}
+
+				tip = player[i] % 10;
+				if (tip == 1) cout << (char)03;
+				else if (tip == 2) cout << (char)04;
+				else if (tip == 3) cout << (char)05;
+				else if (tip == 4) cout << (char)06;
+				cout << " ";
+			}
+		}
+
+		if (scorplayer > 21)
+		{
+			for (i = 0; i < max; i++)
+			{
+				if (i % 2 == 0)
+				{
+					if (player[i] == 0) break;
+					if (player[i] == 11) scorplayer -= 10;
+					else if (player[i] == 12) scorplayer -= 10;
+					else if (player[i] == 13) scorplayer -= 10;
+					else if (player[i] == 14) scorplayer -= 10;
+				}
+			}
+		}
+
+		cout << "\n Scor1  " << nume_player << " : " << scorplayer;
+		cout << "\n Pariu1 " << nume_player << " : " << scorplayer;
+
+
+		for (i = 0; i < max; i++)
+		{
+			if (player[i] != 0 && i % 2 == 1)
+			{
+				val = player[i] / 10;
+				if (val == 1)
+				{
+					cout << "A";
+					splitscorplayer += 11;
+				}
+				else if (val == 11)
+				{
+					cout << "J";
+					splitscorplayer += 10;
+				}
+				else if (val == 12)
+				{
+					cout << "Q";
+					splitscorplayer += 10;
+				}
+				else if (val == 13)
+				{
+					cout << "K";
+					splitscorplayer += 10;
+				}
+				else
+				{
+					cout << val;
+					splitscorplayer += val;
+				}
+
+				tip = player[i] % 10;
+				if (tip == 1) cout << (char)03;
+				else if (tip == 2) cout << (char)04;
+				else if (tip == 3) cout << (char)05;
+				else if (tip == 4) cout << (char)06;
+				cout << " ";
+			}
+		}
+
+		if (splitscorplayer > 21)
+		{
+			for (i = 0; i < max; i++)
+			{
+				if (i % 2 == 1)
+				{
+					if (player[i] == 0) break;
+					if (player[i] == 11) splitscorplayer -= 10;
+					else if (player[i] == 12) splitscorplayer -= 10;
+					else if (player[i] == 13) splitscorplayer -= 10;
+					else if (player[i] == 14) splitscorplayer -= 10;
+				}
+			}
+		}
+
+		cout << "\n Scor2  " << nume_player << " : " << splitscorplayer;
+		cout << "\n Pariu2 " << nume_player << " : " << splitplayerbet;
+		cout << "\n Cont   " << nume_player << " : " << bani;
+		cout << "\n\n";
+	}
+
+
+
+	if (dealer[1] / 10 == 1) insuranceok = true;
+	if (player[0] / 10 == player[1] / 10) splitok = true;
+
+
+
+	if (alegere1 == 2)
+	{
+		if (scorcpuplayer == 21 && cpu_player[2] == 0)
+		{
+			cpu_playerbani += (cpu_playerbet * 3) / 2;
+		}
+		else if (scorcpuplayer <= 21 && scordealer < scorcpuplayer && showHiden == true)
+		{
+			cpu_playerbani += cpu_playerbet * 2;
+		}
+		else if (scorcpuplayer <= 21 && scordealer > 21 && showHiden == true)
+		{
+			cpu_playerbani += cpu_playerbet * 2;
+		}
+		else if (scorcpuplayer == scordealer && showHiden == true)
+		{
+			cpu_playerbani += cpu_playerbet;
+		}
+	}
+
+
+	if (alegere1 == 2)
+	{
+		scorcpuplayer = GenCpuPlayer(uz_carti, cpu_player);
+	}
+
+
+
+
+	if (scorplayer == 21 && player[2] == 0)
+	{
+		jocnou = true;
+		bani += (playerbet * 3) / 2;
+		cout << "!!! ***BlackJack*** !!! \n";
+		cout << "Apasa enter pt un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		system("cls");
+		titlu();
+		goto _jocnou;
+	}
+	else if (insuranceok == true && showHiden == true)
+	{
+		jocnou = true;
+		if (scorascuns == 21 && dealer[2] == 0)
+		{
+			bani = bani + insurancebet * 2;
+			cout << "Ai castigat pariul 'Insurance' !!! \n";
+			cout << "Apasa enter pt un joc nou !!! \n";
+			cin.get();
+			cin.get();
+			system("cls");
+			titlu();
+			goto _jocnou;
+		}
+		else if (scorascuns < 21 && dealer[2] == 0)
+		{
+			cout << "Ai pierdut pariul 'Insurance' !!! \n";
+			cout << "Apasa enter pt un joc nou !!! \n";
+			cin.get();
+			cin.get();
+			system("cls");
+			titlu();
+			goto _jocnou;
+		}
+	}
+	else if (scorplayer > 21)
+	{
+		jocnou = true;
+		cout << "!!! Ai pierdut !!! \n";
+		cout << "Apasa enter pt un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		system("cls");
+		titlu();
+		goto _jocnou;
+	}
+	else if (scorplayer <= 21 && scordealer < scorplayer && showHiden == true)
+	{
+		jocnou = true;
+		bani += playerbet * 2;
+		cout << "!!! Ai castigat !!! \n";
+		cout << "Apasa enter pt un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		system("cls");
+		titlu();
+		goto _jocnou;
+	}
+	else if (scordealer <= 21 && scordealer > scorplayer && showHiden == true)
+	{
+		jocnou = true;
+		cout << "!!! Ai pierdut !!! \n";
+		cout << "Apasa enter pt un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		system("cls");
+		titlu();
+		goto _jocnou;
+	}
+	else if (scorplayer <= 21 && scordealer > 21 && showHiden == true)
+	{
+		jocnou = true;
+		bani += playerbet * 2;
+		cout << "!!! Ai castigat !!! \n";
+		cout << "Apasa enter pt un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		system("cls");
+		titlu();
+		goto _jocnou;
+	}
+	else if (scorplayer == scordealer && showHiden == true)
+	{
+		jocnou = true;
+		bani += playerbet;
+		cout << "!!! Ai scor egal cu dealerul !!! \n";
+		cout << "Apasa enter pt un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		system("cls");
+		titlu();
+		goto _jocnou;
+	}
+	else if (splitok == true && showHiden == true)
+	{
+		if (scordealer > 21)
+		{
+			jocnou = true;
+			bani = bani + playerbet + splitplayerbet;
+			cout << "!!! Ai castigat !!! \n";
+			cout << "Apasa enter pt un joc nou !!! \n";
+			cin.get();
+			cin.get();
+			system("cls");
+			titlu();
+			goto _jocnou;
+		}
+		else if ((scordealer <= 21 && scorplayer > scordealer && splitscorplayer > scordealer) ||
+				 (scordealer <= 21 && scorplayer > scordealer && splitscorplayer < scordealer) ||
+				 (scordealer <= 21 && scorplayer < scordealer && splitscorplayer > scordealer))
+		{
+			jocnou = true;
+			bani = bani + splitplayerbet;
+			cout << "!!! Ai castigat numai 'o mana' !!! \n";
+			cout << "Apasa enter pt un joc nou !!! \n";
+			cin.get();
+			cin.get();
+			system("cls");
+			titlu();
+			goto _jocnou;
+		}
+		else if (scordealer <= 21 && scorplayer < scordealer && splitscorplayer < scordealer)
+		{
+			jocnou = true;
+			cout << "!!! Ai pierdut !!! \n";
+			cout << "Apasa enter pt un joc nou !!! \n";
+			cin.get();
+			cin.get();
+			system("cls");
+			titlu();
+			goto _jocnou;
+		}
+
+	}
+
+
+
+
+
+
+	cout << "\t        |***MENIU***| \n";
+	cout << "1.Hit \n";
+	cout << "2.Stand \n";
+	cout << "3.Surrender \n";
+	if (scorplayer == 9 || scorplayer == 10 || scorplayer == 11) cout << "4.Double \n";
+	if (splitok == true) cout << "5.Split \n";
+	if (insuranceok == true) cout << "6.Insurance ?? \n";
+	cout << "0. >EXIT< \n";
+	cout << "\n";
+	cout << "Alegerea dumneavoastra : ";
+	cin >> alegere2;
+
+	if (alegere2 < 0 || alegere2 > 6)
+	{
+		cout << "!!! Comanda eronata !!!     \n";
+		cin.get();
+		cin.get();
+		goto _alegere2;
+	}
+	else if (alegere2 == 1)
+	{
+		if (splitok == false)
+		{
+			nrgen = VerifGen(uz_carti);
+
+			for (i = 0; i < max; i++)
+			if (player[i] == 0)
+			{
+				player[i] = nrgen;
+				break;
+			}
+		}
+		else if (splitok == true)
+		{
+			j = 1;
+			while (j == 2)
+			{
+				nrgen = VerifGen(uz_carti);
+
+				for (i = 0; i < max; i++)
+				if (player[i] == 0)
+				{
+					player[i] = nrgen;
+					break;
+				}
+			}
+		}
+
+		scordealer = 0;
+		scorplayer = 0;
+		scorcpuplayer = 0;
+		scorascuns = 0;
+		goto _alegere2;
+	}
+	else if (alegere2 == 2)
+	{
+		while (scorascuns < 17)
+		{
+			scorascuns = 0;
+			gen_dealer(uz_carti, dealer);
+			for (i = 0; i < max; i++)
+			{
+				if (dealer[i] != 0)
+				{
+					val = dealer[i] / 10;
+					if (val == 1) scorascuns += 11;
+					else if (val == 11) scorascuns += 10;
+					else if (val == 12) scorascuns += 10;
+					else if (val == 13) scorascuns += 10;
+					else scorascuns += val;
+				}
+			}
+
+			if (scorascuns > 21)
+			{
+				for (i = 0; i < max; i++)
+				{
+					if (dealer[i] == 0) break;
+					if (dealer[i] == 11) scorascuns -= 10;
+					else if (dealer[i] == 12) scorascuns -= 10;
+					else if (dealer[i] == 13) scorascuns -= 10;
+					else if (dealer[i] == 14) scorascuns -= 10;
+				}
+			}
+		}
+
+		showHiden = true;
+		scordealer = 0;
+		scorplayer = 0;
+		scorcpuplayer = 0;
+		scorascuns = 0;
+		goto _alegere2;
+	}
+	else if (alegere2 == 3)
+	{
+		playerbet = playerbet / 2;
+		bani += playerbet;
+
+		cout << "Apasati ENTER pentru a incepe un joc nou !!! \n";
+		cin.get();
+		cin.get();
+		goto _jocnou;
+	}
+	else if (alegere2 == 4)
+	{
+
+		if (scorplayer == 9 || scorplayer == 10 || scorplayer == 11)
+		{
+
+			bani -= playerbet;
+			playerbet = playerbet * 2;
+
+
+			nrgen = VerifGen(uz_carti);
+			for (i = 0; i < max; i++)
+			if (player[i] == 0)
+			{
+				player[i] = nrgen;
+				break;
+			}
+
+
+
+			while (scorascuns < 17)
+			{
+				scorascuns = 0;
+				gen_dealer(uz_carti, dealer);
+				for (i = 0; i < max; i++)
+				{
+					if (dealer[i] != 0)
+					{
+						val = dealer[i] / 10;
+						if (val == 1) scorascuns += 11;
+						else if (val == 11) scorascuns += 10;
+						else if (val == 12) scorascuns += 10;
+						else if (val == 13) scorascuns += 10;
+						else scorascuns += val;
+					}
+				}
+
+				if (scorascuns > 21)
+				{
+					for (i = 0; i < max; i++)
+					{
+						if (dealer[i] == 0) break;
+						if (dealer[i] == 11) scorascuns -= 10;
+						else if (dealer[i] == 12) scorascuns -= 10;
+						else if (dealer[i] == 13) scorascuns -= 10;
+						else if (dealer[i] == 14) scorascuns -= 10;
+					}
+				}
+
+				showHiden = true;
+				scordealer = 0;
+				scorplayer = 0;
+				scorcpuplayer = 0;
+				scorascuns = 0;
+				goto _alegere2;
+			}
+		}
+	}
+	else if (alegere2 == 5 && splitok == true)
+	{
+		splitplayerbet = playerbet / 2;
+		playerbet = splitplayerbet;
+
+		j = 1;
+
+		while (j == 2)
+		{
+			nrgen = VerifGen(uz_carti);
+
+			for (i = 0; i < max; i++)
+			if (player[i] == 0)
+			{
+				player[i] = nrgen;
+				break;
+			}
+		}
+
+		splitscorplayer = 0;
+		scordealer = 0;
+		scorplayer = 0;
+		scorcpuplayer = 0;
+		scorascuns = 0;
+		goto _alegere2;
+	}
+	else if (alegere2 == 6 && insuranceok == true)
+	{
+		insurancebet = playerbet / 2;
+		bani -= insurancebet;
+
+		showHiden = true;
+		scordealer = 0;
+		scorplayer = 0;
+		scorcpuplayer = 0;
+		scorascuns = 0;
+		goto _alegere2;
+	}
+	else if (alegere2 == 0)
+	{
+		goto exitgame;
+	}
+
+	exitgame:
+
+	return 0;
+}
